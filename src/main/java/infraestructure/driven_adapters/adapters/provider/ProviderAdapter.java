@@ -6,6 +6,9 @@ package infraestructure.driven_adapters.adapters.provider;
 
 import domain.model.softtek.provider.Provider;
 import domain.model.softtek.provider.gateways.ProviderRepository;
+import infraestructure.driven_adapters.config.ConexionJPA;
+import infraestructure.driven_adapters.util.CodeBuilderAdapters;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,16 +20,24 @@ import javax.persistence.Query;
  */
 public class ProviderAdapter implements ProviderRepository {
     
-    @PersistenceContext
+    private CodeBuilderAdapters codeBuilderAdapters;
     private EntityManager entityManager;
+    
+    public ProviderAdapter(){
+        codeBuilderAdapters = new CodeBuilderAdapters();
+    }
 
     @Override
     public Provider save(Provider provider) {
+        ProviderEntity providerEntity = codeBuilderAdapters.toEntityProvider(provider);
+        entityManager = ConexionJPA.createEntityManager();
         try {
-            entityManager.persist(provider);
+            entityManager.getTransaction().begin();
+            entityManager.persist(providerEntity);
+            entityManager.getTransaction().commit();
             System.out.println("Provider guardado correctamente");
-        } catch (Exception e) {
-            System.out.println("error provider!!!!: "+ e);
+         } catch(Exception e ){
+            System.out.println("Error provider adapter: " + e.getMessage());
         }
         return provider;
     }
@@ -38,14 +49,21 @@ public class ProviderAdapter implements ProviderRepository {
 
     @Override
     public List<Provider> providers() {
-        List<Provider> listProvider = null;
+        entityManager = ConexionJPA.createEntityManager();
+        List<ProviderEntity> listProvider = new ArrayList<>();
+        List<Provider> listProviderModel = new ArrayList<>();
         try {
             Query query = entityManager.createNamedQuery("Provider.findAll");
             listProvider = query.getResultList();
-        } catch (Exception e) {
-            System.out.println("error provider!!!!: "+ e);
+            
+            for (ProviderEntity providerEntity : listProvider) {
+                Provider providerModel = codeBuilderAdapters.toProviderModel(providerEntity);
+                listProviderModel.add(providerModel);    
+            }
+        }catch(Exception e ){
+            System.out.println("Error provider adapter: " + e.getMessage());
         }
-        return listProvider;
+        return listProviderModel;
     }
 
     @Override

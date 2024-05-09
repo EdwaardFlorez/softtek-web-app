@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
   <persistence-unit name="softtekPU" transaction-type="RESOURCE_LOCAL">
-    <provider>org.hibernate.jpa.HibernatePersistence</provider>
-    <class>com.softtek.web.app.Vehicle</class>
-    <class>com.softtek.web.app.Provider</class>
-    <class>com.softtek.web.entity.Provider</class>
-    <class>com.softtek.web.entity.Vehicle</class>
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>infraestructure.driven_adapters.adapters.provider.ProviderEntity</class>
     <class>infraestructure.driven_adapters.adapters.vehicle.VehicleEntity</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>

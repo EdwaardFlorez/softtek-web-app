@@ -20,10 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  *
@@ -31,12 +27,8 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "provider")
-@Builder
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @NamedQueries({
-    @NamedQuery(name = "Provider.findAll", query = "SELECT p FROM Provider p")})
+    @NamedQuery(name = "Provider.findAll", query = "SELECT p FROM ProviderEntity p")})
 public class ProviderEntity implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "providerEntity")
@@ -60,9 +52,19 @@ public class ProviderEntity implements Serializable {
     private String providerIdentification;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "provider_email")
+    private String providerEmail;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "provider_vehicles")
     private int providerVehicles;
 
+    
+    public ProviderEntity() {
+    	
+    }
+    
     public ProviderEntity(Integer providerId) {
         this.providerId = providerId;
     }
@@ -97,6 +99,15 @@ public class ProviderEntity implements Serializable {
     public void setProviderIdentification(String providerIdentification) {
         this.providerIdentification = providerIdentification;
     }
+    
+    public String getProviderEmail() {
+        return providerEmail;
+    }
+
+    public void setProviderEmail(String providerEmail) {
+        this.providerEmail = providerEmail;
+    }
+
 
     public int getProviderVehicles() {
         return providerVehicles;

@@ -12,11 +12,30 @@ import infraestructure.driven_adapters.adapters.provider.ProviderEntity;
  * @author edwar
  */
 public class CodeBuilderAdapters {
-    public ProviderEntity toEntityProvider(Provider provider){
-        return ProviderEntity.builder()
-                .providerName(provider.getName())
-                .providerIdentification(provider.getIdentification())
-                .providerVehicles(provider.getNumberOfVehicles())
-                .build();
+    
+    public CodeBuilderAdapters() {
     }
+    
+    public ProviderEntity toEntityProvider(Provider provider){
+    	ProviderEntity providerEntity = new ProviderEntity();
+    	providerEntity.setProviderName(provider.getName());
+    	providerEntity.setProviderIdentification(provider.getIdentification());
+    	providerEntity.setProviderEmail(provider.getEmail());
+    	providerEntity.setProviderVehicles(provider.getNumberOfVehicles());
+    	
+        return providerEntity;
+    }
+    
+    public Provider toProviderModel(ProviderEntity providerEntity){
+        Provider providerModel = new Provider();
+        providerModel.setId(providerEntity.getProviderId());
+        providerModel.setName(providerEntity.getProviderName());
+        providerModel.setIdentification(providerEntity.getProviderIdentification());
+        providerModel.setEmail(providerEntity.getProviderEmail());
+        providerModel.setNumberOfVehicles(providerEntity.getProviderVehicles());
+        return providerModel;
+    }
+
+    
+    
 }

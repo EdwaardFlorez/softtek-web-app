@@ -31,15 +31,15 @@
 		<h:form id="form" style="margin-top: 10px;" >
 			<h:panelGrid columns="3">
 			
-				<h:outputLabel>First name:</h:outputLabel> <h:inputText value="#{provider.name}" id="firstName" /> <h:message for="firstName" />
+				<h:outputLabel>Provider name:</h:outputLabel> <h:inputText value="#{providerView.name}" id="name" /> <h:message for="name" />
 	
-				<h:outputLabel>Last name:</h:outputLabel> <h:inputText value="#{provider.identification}" id="lastName" /> <h:message for="lastName" />
-	
-				<h:outputLabel>Email:</h:outputLabel> <h:inputText value="#{provider.numberOfVehicle}" id="email" 
+				<h:outputLabel>Provider identification:</h:outputLabel> <h:inputText value="#{providerView.identification}" id="identification" /> <h:message for="identification" />
+                                
+                                <h:outputLabel>Email:</h:outputLabel> <h:inputText value="#{providerView.email}" id="email" 
 									required="true"
             							requiredMessage="Your email is mandatory."/> 	<h:message for="email" />
-				
-				<h:outputLabel /> <h:commandButton value="Save" styleClass="save" action="#{providerPresenter.addProvider(provider)}"/>
+	
+				<h:outputLabel /> <h:commandButton value="Save" styleClass="save" action="#{providerPresenter.addProvider(providerView)}"/>
 			
 			</h:panelGrid>
 		</h:form>
